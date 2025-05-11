@@ -2,6 +2,8 @@ Comprehensive Flutter To-Do App Evaluation Prompt
 This evaluation prompt includes a structured template format to ensure consistent evaluation across different AI-generated Flutter applications.
 # Flutter To-Do App Evaluation
 
+When evaluating each AI tool, create a separate file named `evaluation_<tool>.md` where `<tool>` is the name of the AI tool being evaluated (e.g., `evaluation_aider.md`, `evaluation_copilot.md`, etc.).
+
 ## Evaluation Process Guidelines
 1. **Reference the original prompt**: Always refer back to the original prompt to verify if requirements were met.
 2. **Code examples**: Include specific code snippets when discussing strengths or weaknesses.

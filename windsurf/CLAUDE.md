@@ -34,17 +34,23 @@ flutter run -d <device_id>
 
 # Check available devices
 flutter devices
+
+# Run the app in profile mode (performance overlay)
+flutter run --profile
 ```
 
 ### Building
 
 ```bash
 # Build for specific platform
-flutter build apk       # Android APK
-flutter build appbundle # Android App Bundle
-flutter build ios       # iOS (must be on macOS)
-flutter build macos     # macOS application
-flutter build web       # Web application
+flutter build apk        # Android APK
+flutter build appbundle  # Android App Bundle
+flutter build ios        # iOS (must be on macOS)
+flutter build macos      # macOS application
+flutter build web        # Web application
+
+# Create a release build
+flutter build apk --release
 ```
 
 ### Testing
@@ -58,6 +64,9 @@ flutter test test/task_provider_test.dart
 
 # Run tests with coverage
 flutter test --coverage
+
+# Generate coverage report (requires lcov)
+genhtml coverage/lcov.info -o coverage/html
 ```
 
 ### Linting and Code Quality
@@ -68,6 +77,25 @@ flutter analyze
 
 # Format code
 flutter format lib/
+
+# Check for formatting issues without changing files
+flutter format --set-exit-if-changed lib/
+```
+
+### Dependency Management
+
+```bash
+# Add a dependency
+flutter pub add <package_name>
+
+# Remove a dependency
+flutter pub remove <package_name>
+
+# Check outdated dependencies
+flutter pub outdated
+
+# Upgrade dependencies
+flutter pub upgrade
 ```
 
 ## Architecture
@@ -95,5 +123,33 @@ The app follows a Provider-based architecture for state management:
 
 ## Testing Strategy
 
-- Unit tests focus on business logic (TaskProvider)
-- Mock data persistence using SharedPreferences.setMockInitialValues
+- **Unit Tests**: Focus on business logic in TaskProvider using SharedPreferences.setMockInitialValues for data mocking
+- **Widget Tests**: Test UI components and integration with providers
+- **Integration Tests**: Not currently implemented, but would test full user workflows
+
+## State Management
+
+The app uses the Provider package for state management:
+
+- **TaskProvider**: Central state management class that extends ChangeNotifier
+- State changes trigger UI updates through Consumer widgets or Provider.of calls
+- All data mutations go through the provider to maintain consistency
+
+## Error Handling
+
+Error handling is implemented at multiple levels:
+
+- **TaskProvider**: Captures and exposes errors during data operations
+- **UI**: Shows appropriate error messages and retry options
+- **StorageService**: Handles persistence errors gracefully
+
+## Task Operations
+
+The app supports the following operations on tasks:
+
+- Create: Add new tasks with title, description, priority, and due date
+- Read: View task details and list all tasks
+- Update: Modify task properties or toggle completion status
+- Delete: Remove tasks from the list with swipe-to-delete functionality
+- Sort: Arrange tasks by priority, due date, title, completion status, or creation date
+- Filter: Show or hide completed tasks

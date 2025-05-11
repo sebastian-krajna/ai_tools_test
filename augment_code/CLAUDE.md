@@ -42,6 +42,10 @@ flutter test test/models/task_test.dart
 
 # Run tests with coverage
 flutter test --coverage
+
+# Run a specific test group or test
+flutter test --name="TaskProvider Tests"
+flutter test --name="addTask should add a task to repository"
 ```
 
 ### Linting and Analysis
@@ -52,6 +56,9 @@ flutter analyze
 
 # Format code
 flutter format lib/
+
+# Fix formatting issues automatically
+flutter format .
 ```
 
 ### Building
@@ -145,3 +152,29 @@ The app follows a clean architecture pattern with Provider for state management 
 
 4. **Utils Tests**
    - Test utility functions like date formatting
+
+## Code Generation
+
+After making changes to models with Hive annotations, you must regenerate the adapter code:
+
+```bash
+# Generate Hive adapter code
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+## Common Workflows
+
+### Adding a New Task Feature
+
+1. Update the Task model in `lib/models/task.dart`
+2. Regenerate Hive adapters with build_runner
+3. Update the repository methods in `lib/repositories/task_repository.dart`
+4. Add business logic to `lib/providers/task_provider.dart`
+5. Update UI components to display/edit the new feature
+6. Update tests to verify the new functionality
+
+### UI Theme Customization
+
+1. Theme settings are defined in `lib/constants/app_theme.dart`
+2. Color definitions are in `lib/constants/app_colors.dart`
+3. Apply theme using ThemeData in `MaterialApp` widget in `main.dart`

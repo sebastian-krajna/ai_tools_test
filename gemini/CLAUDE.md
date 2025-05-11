@@ -117,3 +117,29 @@ The app is initialized in `main.dart` where:
 - The TaskProvider is registered using ChangeNotifierProvider
 - MaterialApp is configured with the TaskListScreen as the home screen
 - Theme settings are defined using Material 3 design
+
+## Coding Conventions
+
+- Use proper error handling in async operations
+- Follow standard Flutter Provider pattern for state management
+- Maintain separation of concerns between models, providers, services, screens, and widgets
+- Use copyWith pattern for immutable updates to model objects
+- Format code according to standard Dart conventions using `flutter format`
+
+## Implementation Notes
+
+### StorageService
+- Uses SharedPreferences for task persistence
+- JSON-encodes task data for storage
+- Handles proper serialization of enum values and dates
+
+### TaskProvider
+- Central state management using ChangeNotifier
+- All task operations should update storage via StorageService
+- Implements optimistic UI updates (UI updates before async operations complete)
+- Error handling included for all async operations
+
+### Testing
+- Provider tests focus on business logic verification
+- Mock StorageService when testing TaskProvider in isolation
+- Test both success and error scenarios

@@ -6,37 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is a modern to-do list application built with Flutter, following Material Design 3 principles and implementing local data persistence with Hive. The application allows users to manage tasks with features like adding, editing, deleting, and marking tasks as complete.
 
-## Project Structure
-
-The application follows a clean architecture approach:
-
-- **models/**: Data structures and business logic
-  - `task.dart`: Core Task model with properties and methods
-  - `task.g.dart`: Generated Hive adapter code
-  - `task_priority_adapter.dart`: Custom Hive adapter for TaskPriority enum
-
-- **providers/**: State management classes using Provider pattern
-  - `task_provider.dart`: Manages task data and CRUD operations
-  - `theme_provider.dart`: Handles theme state and preferences
-
-- **screens/**: Main application views
-  - `home_screen.dart`: Main screen with task list and tabs
-  - `task_detail_screen.dart`: Detailed view of a task
-  - `task_form_screen.dart`: Form for creating/editing tasks
-
-- **widgets/**: Reusable UI components
-  - `task_form.dart`: Form widget for task creation/editing
-  - `task_item.dart`: List item representation of a task
-
 ## Development Commands
 
-### Setup and Installation
+### Setup and Dependencies
 
 ```bash
 # Install dependencies
 flutter pub get
 
-# Generate Hive adapters
+# Generate Hive adapters (required after model changes)
 flutter pub run build_runner build --delete-conflicting-outputs
 
 # Clean and regenerate (if having issues with generated code)
@@ -83,24 +61,56 @@ flutter build ios
 flutter build web
 ```
 
-## Key Architecture Concepts
+## Project Architecture
 
-1. **State Management**: The app uses the Provider pattern for state management:
-   - `TaskProvider` manages the task collection and persistence operations
-   - `ThemeProvider` handles theme state (light/dark mode)
-   - Both providers use `ChangeNotifier` for reactive UI updates
+The application follows a clean architecture approach:
 
-2. **Data Persistence**: The app uses Hive for local storage:
-   - Tasks are stored in a Hive box named 'tasks'
-   - Theme preferences are stored in a Hive box named 'settings'
-   - Custom adapters are used for serializing the Task model and TaskPriority enum
+### Data Layer
 
-3. **UI Architecture**: 
-   - Material Design 3 with light/dark theme support
-   - Task items show visual indicators for priority and due date status
-   - Animated interactions for task completion and list operations
+- **Models** (`lib/models/`): Core data structures and business logic
+  - `Task` class with properties: id, title, description, priority, dueDate, isCompleted, createdAt
+  - `TaskPriority` enum with levels: low, medium, high
+  - Hive adapters for persistence
 
-4. **Task Management**:
-   - Tasks have properties: id, title, description, priority, dueDate, isCompleted, createdAt
-   - Tasks can be sorted by priority, due date, completion status, or creation date
-   - Task priority is represented as an enum with low, medium, and high levels
+### State Management
+
+- **Providers** (`lib/providers/`): Manage application state using the Provider pattern
+  - `TaskProvider`: Handles task CRUD operations and sorting (by priority, due date, completion, creation date)
+  - `ThemeProvider`: Manages light/dark theme state with persistence
+
+### Presentation Layer
+
+- **Screens** (`lib/screens/`): Main UI containers
+  - `HomeScreen`: Main screen with task list and tabs for active/completed tasks
+  - `TaskDetailScreen`: Detailed view of a task
+  - `TaskFormScreen`: Form for creating/editing tasks
+
+- **Widgets** (`lib/widgets/`): Reusable UI components
+  - `TaskItem`: List item representation with animations and visual indicators
+  - `TaskForm`: Form component for task creation/editing
+
+### Persistence
+
+- **Hive Storage**: Local database for storing tasks and settings
+  - Tasks are stored in a Hive box named 'tasks'
+  - Theme preferences are stored in a Hive box named 'settings'
+
+## Key Implementation Details
+
+1. **Task Lifecycle**:
+   - Tasks can be created, read, updated, and deleted through the `TaskProvider`
+   - Each task has a unique UUID generated upon creation
+   - Tasks include metadata like creation time and completion status
+
+2. **UI Features**:
+   - Material Design 3 with adaptive light/dark themes
+   - Animated transitions for task completion
+   - Visual indicators for task priority and due dates
+   - Swipe-to-delete functionality
+   - Sorting options for tasks
+
+3. **Data Flow**:
+   - `TaskProvider` loads tasks from Hive storage on initialization
+   - UI components observe the provider state and rebuild when data changes
+   - Changes to tasks trigger persistence operations and UI updates
+   - Theme changes are persisted and applied immediately

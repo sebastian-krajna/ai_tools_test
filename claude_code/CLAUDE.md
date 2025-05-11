@@ -119,3 +119,10 @@ The codebase includes:
 - **Widget tests** for UI components (`priority_badge_test.dart`)
 
 Tests use mocks (e.g., `MockStorageService`) to isolate components for testing.
+
+## Important Development Notes
+
+- Remember to run the build_runner after making changes to Hive models
+- Use Provider pattern for state management throughout the app
+- Follow the existing naming conventions and code structure
+- Ensure tests are written for new functionality
