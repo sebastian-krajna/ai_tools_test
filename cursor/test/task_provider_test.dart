@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:todo_app/models/task.dart';
-import 'package:todo_app/providers/task_provider.dart';
+import '../lib/models/task.dart';
+import '../lib/providers/task_provider.dart';
 
 void main() {
   group('TaskProvider Tests', () {
