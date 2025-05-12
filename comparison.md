@@ -31,15 +31,4 @@
 
 Please provide complete, runnable code with proper project structure and all necessary files. The app should be ready to run without requiring additional implementation. If you need to make architectural decisions, prefer simplicity and clarity over complex patterns. Explain any key design decisions in comments within the code."
 
-**Evaluation Criteria**
 
-* Code completeness and correctness  
-* Architecture and organization  
-* UI implementation quality  
-* State management approach  
-* Documentation quality  
-* Testing strategy  
-* Error handling  
-* Adherence to Flutter best practices
-
----
